@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import feaisil.raceforthegalaxy.card.Card;
-import feaisil.raceforthegalaxy.game.Action;
 import feaisil.raceforthegalaxy.game.Game;
 import feaisil.raceforthegalaxy.game.Player;
 import feaisil.raceforthegalaxy.gui.PlayerUserInterface;
@@ -31,7 +30,8 @@ public class CommandLineInterface implements PlayerUserInterface {
 	}
 
 	public List<Card> getChoosenCards(List<Card> iCards, int iMin, int iMax) {
-		System.out.println("Enter the number of the cards you want to choose in this format: 5 1 3");
+		System.out.println("Choose " + iMin + " up to " + iMax + " cards");
+		System.out.println("Enter the number of the cards you want to choose (format: N N N)");
 
 		List<Card> aResult = null;
 		
@@ -125,7 +125,12 @@ public class CommandLineInterface implements PlayerUserInterface {
 		case chooseAction:
 			System.out.println("Choose an action to play");
 			break;
-			
+		case exploreDiscard:
+			System.out.println("Explore phase, discard cards");
+			break;
+		case finalizeDiscardHand:
+			System.out.println("End of turn, discard cards from hand");
+			break;			
 		default:
 		}
 		displayCards(cards);
@@ -137,14 +142,19 @@ public class CommandLineInterface implements PlayerUserInterface {
 	public void sendWarning(Player iP, Warning warning) {
 		switchToPlayer(iP);
 		
+		System.out.print("/!\\ ");
 		switch(warning)
 		{
 		case PrestigeActionAlreadyUsed:
-			System.err.println("Prestige action already used!");
+			System.out.print("Prestige action already used!");
 			break;
 		case TwoActionSelectedButNotPrestige:
-			System.err.println("Two actions selected but none prestige!");
+			System.out.print("Two actions selected but none prestige!");
+			break;
+		default:
+			System.out.print("Unknown warning");
 		}
+		System.out.println(" /!\\");
 		
 	}
 }
